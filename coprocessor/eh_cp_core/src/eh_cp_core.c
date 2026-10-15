@@ -646,6 +646,10 @@ static void process_rx_pkt(interface_buffer_handle_t *buf_handle)
 		eh_transport_utils_update_raw_tp_rx_count(payload_len);
 	}
 #endif
+	else {
+		/* Any other interface goes to a feature that registered for it */
+		eh_cp_dispatch_rx(buf_handle->if_type, payload, payload_len, NULL);
+	}
 
 done:
 	if (buf_handle->free_buf_handle && buf_handle->priv_buffer_handle) {
